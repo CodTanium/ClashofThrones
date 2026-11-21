@@ -6,7 +6,8 @@ config_version=5
 
 config/name="Clash of Thrones"
 config/description="A 2D dark-fantasy action platformer."
-run/main_scene="res://scenes/Main.tscn"
+config/version="0.3.0"
+run/main_scene="res://scenes/Menu.tscn"
 config/features=PackedStringArray("4.7", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 boot_splash/bg_color=Color(0.03, 0.03, 0.05, 1)

@@ -21,3 +21,5 @@ Installed outside the repo by `scripts/setup-art-tools.ps1`. Images they produce
 |---|---|---|
 | `src/art/hero.png` (hero sheet) | rig frames restyled with SDXL + Pixel Art XL (img2img, denoise 0.58-0.68), cleaned in-engine | same as the project |
 | `reports/art/hero-concept-*.png` | SDXL + Pixel Art XL, text prompt (concepts only) | same as the project |
+| `src/art/warden.png`, `ghoul.png`, `archer.png`, `abbot.png` | code rigs restyled with SDXL + Pixel Art XL (img2img, denoise 0.6-0.62), cleaned in-engine | same as the project |
+| Level art, props, music, sound effects (v0.3) | generated / synthesised in code | same as the project |

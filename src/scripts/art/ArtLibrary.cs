@@ -6,18 +6,31 @@ namespace ClashOfThrones.Art;
 
 /// <summary>
 /// Single source of every texture. Uses an edited PNG from res://art/ when one exists (so artists can paint over the
-/// baked placeholder in Pixelorama/Krita), otherwise generates the placeholder in memory.
+/// baked placeholder in Pixelorama/Krita), otherwise generates the placeholder in memory. Character sheets are merged:
+/// rows the PNG has come from the PNG, newer rows (added later) come from the generator.
 /// </summary>
 public static class ArtLibrary
 {
     public const string ArtDir = "res://art/";
     static readonly Dictionary<string, Texture2D> Cache = new();
-    static SpriteSheet _hero, _warden;
+    static readonly Dictionary<string, SpriteSheet> Sheets = new();
 
     public static readonly Vector2I HeroFrame = new(128, 112);
     public static readonly Vector2 HeroOrigin = new(64, 108);
     public static readonly Vector2I WardenFrame = new(160, 128);
     public static readonly Vector2 WardenOrigin = new(80, 124);
+    public static readonly Vector2I AbbotFrame = new(256, 208);
+    public static readonly Vector2 AbbotOrigin = new(128, 204);
+
+    /// <summary>name -> (defs, poser, style, frame, origin)</summary>
+    static readonly Dictionary<string, Func<SpriteSheet>> SheetMakers = new()
+    {
+        ["hero"] = () => SpriteSheet.Bake(Animations.Hero, Animations.HeroPose, Style.Knight(), HeroFrame.X, HeroFrame.Y, HeroOrigin),
+        ["warden"] = () => SpriteSheet.Bake(Animations.Warden, Animations.WardenPose, Style.Warden(), WardenFrame.X, WardenFrame.Y, WardenOrigin),
+        ["ghoul"] = () => SpriteSheet.Bake(Animations.Ghoul, Animations.GhoulPose, Style.Ghoul(), HeroFrame.X, HeroFrame.Y, HeroOrigin),
+        ["archer"] = () => SpriteSheet.Bake(Animations.Archer, Animations.ArcherPose, Style.Archer(), HeroFrame.X, HeroFrame.Y, HeroOrigin),
+        ["abbot"] = () => SpriteSheet.Bake(Animations.Abbot, Animations.AbbotPose, Style.Abbot(), AbbotFrame.X, AbbotFrame.Y, AbbotOrigin),
+    };
 
     static readonly Dictionary<string, Func<Image>> Generators = new()
     {
@@ -34,27 +47,65 @@ public static class ArtLibrary
         ["altar"] = EnvironmentArt.Altar,
         ["dust"] = () => EnvironmentArt.Dot(1, Colors.White),
         ["spark"] = EnvironmentArt.Spark,
-        ["hero"] = () => Hero.Image,
-        ["warden"] = () => Warden.Image,
+        ["terrain"] = LevelArt.Terrain,
+        ["spikes"] = LevelArt.Spikes,
+        ["crumble"] = LevelArt.Crumble,
+        ["platform"] = LevelArt.MovingPlatform,
+        ["ladder"] = LevelArt.Ladder,
+        ["chest"] = LevelArt.Chest,
+        ["lever"] = LevelArt.Lever,
+        ["gate"] = LevelArt.Gate,
+        ["door"] = LevelArt.Door,
+        ["breakable"] = LevelArt.Breakable,
+        ["pendulum"] = LevelArt.Pendulum,
+        ["firejet"] = LevelArt.FireJet,
+        ["pickup"] = LevelArt.Pickup,
+        ["orb"] = LevelArt.Orb,
+        ["remnant"] = LevelArt.Remnant,
+        ["arrow"] = LevelArt.Arrow,
+        ["wisp"] = LevelArt.Wisp,
+        ["exit"] = LevelArt.ExitShrine,
+        ["banner"] = LevelArt.Banner,
+        ["chain_lamp"] = LevelArt.ChainLamp,
+        ["bones"] = LevelArt.Bones,
     };
 
-    public static IEnumerable<string> Names => Generators.Keys;
+    public static IEnumerable<string> Names { get { foreach (var k in Generators.Keys) yield return k; foreach (var k in SheetMakers.Keys) yield return k; } }
 
-    public static SpriteSheet Hero => _hero ??= SpriteSheet.Bake(Animations.Hero, Animations.HeroPose, Style.Knight(), HeroFrame.X, HeroFrame.Y, HeroOrigin);
-    public static SpriteSheet Warden => _warden ??= SpriteSheet.Bake(Animations.Warden, Animations.WardenPose, Style.Warden(), WardenFrame.X, WardenFrame.Y, WardenOrigin);
+    public static SpriteSheet Sheet(string name) => Sheets.TryGetValue(name, out var s) ? s : Sheets[name] = SheetMakers[name]();
+    public static SpriteSheet Hero => Sheet("hero");
+    public static SpriteSheet Warden => Sheet("warden");
 
     public static Texture2D Get(string name)
     {
         if (Cache.TryGetValue(name, out var t)) return t;
         string path = ArtDir + name + ".png";
-        if (ResourceLoader.Exists(path)) t = GD.Load<Texture2D>(path);
+        bool isSheet = SheetMakers.ContainsKey(name);
+        if (isSheet)
+        {
+            var gen = Sheet(name).Image;
+            if (ResourceLoader.Exists(path))
+            {
+                // painted rows on top of the generated sheet (new rows keep the generated look until painted)
+                var painted = GD.Load<Texture2D>(path).GetImage();
+                painted.Convert(Image.Format.Rgba8);
+                var merged = (Image)gen.Duplicate();
+                int h = Math.Min(painted.GetHeight(), merged.GetHeight()), w = Math.Min(painted.GetWidth(), merged.GetWidth());
+                merged.FillRect(new Rect2I(0, 0, w, h), new Color(0, 0, 0, 0));
+                merged.BlitRect(painted, new Rect2I(0, 0, w, h), Vector2I.Zero);
+                t = ImageTexture.CreateFromImage(merged);
+            }
+            else t = ImageTexture.CreateFromImage(gen);
+        }
+        else if (ResourceLoader.Exists(path)) t = GD.Load<Texture2D>(path);
         else t = ImageTexture.CreateFromImage(Generators[name]());
         Cache[name] = t;
         return t;
     }
 
-    public static SpriteFrames HeroFrames() => Hero.BuildFrames(Get("hero"));
-    public static SpriteFrames WardenFrames() => Warden.BuildFrames(Get("warden"));
+    public static SpriteFrames Frames(string sheet) => Sheet(sheet).BuildFrames(Get(sheet));
+    public static SpriteFrames HeroFrames() => Frames("hero");
+    public static SpriteFrames WardenFrames() => Frames("warden");
 
     /// <summary>Writes every generated placeholder as PNG into <paramref name="dir"/> (absolute path).</summary>
     public static int BakeAll(string dir)
@@ -62,6 +113,7 @@ public static class ArtLibrary
         System.IO.Directory.CreateDirectory(dir);
         int n = 0;
         foreach (var (name, gen) in Generators) { gen().SavePng(System.IO.Path.Combine(dir, name + ".png")); n++; }
+        foreach (var name in SheetMakers.Keys) { Sheet(name).Image.SavePng(System.IO.Path.Combine(dir, name + ".png")); n++; }
         return n;
     }
 

@@ -59,7 +59,7 @@ public partial class DevBridge : Node
     {
         string Abs(string p) => p.StartsWith("res://") || p.StartsWith("user://") ? ProjectSettings.GlobalizePath(p) : System.IO.Path.GetFullPath(p);
         int I(string k, int d) => a.TryGetValue(k, out var v) && int.TryParse(v, out var n) ? n : d;
-        SpriteSheet Sheet() => a.TryGetValue("rig", out var r) && r == "warden" ? ArtLibrary.Warden : ArtLibrary.Hero;
+        SpriteSheet Sheet() => ArtLibrary.Sheet(a.TryGetValue("rig", out var r) ? r : "hero");
         if (a.TryGetValue("export-rig", out var exp))
         {
             int n = ArtClean.ExportRigFrames(Sheet(), Abs(exp), I("scale", 8), Color.FromHtml(a.GetValueOrDefault("bg", "#7a7680")));
@@ -155,6 +155,11 @@ public partial class DevBridge : Node
                 break;
             }
             case "print": GD.Print("[DevBridge] " + arg); break;
+            case "newgame": Core.Game.I.NewGame(Core.SaveSystem.DevSlot); break;
+            case "continue": Core.Game.I.Continue(int.Parse(arg)); break;
+            case "menu": Core.Game.I.QuitToMenu(false); break;
+            case "give": Core.Game.I.EnsureRun(); World.Main.I?.Grant(arg, World.Main.I.Player.GlobalPosition); break;
+            case "tp": { var a = arg.Split(' '); World.Main.I.Player.GlobalPosition = new Vector2(float.Parse(a[0], CultureInfo.InvariantCulture), float.Parse(a[1], CultureInfo.InvariantCulture)); break; }
             case "quit": GetTree().Quit(); break;
         }
     }
@@ -251,7 +256,8 @@ public partial class DevBridge : Node
             }
             case "spawn_enemy":
             {
-                var w = World.Main.I?.SpawnEnemyAt(new Vector2(e.GetProperty("x").GetSingle(), e.TryGetProperty("y", out var y) ? y.GetSingle() : World.Main.FloorY));
+                var kind = (S(e, "kind", "w") ?? "w")[0];
+                var w = World.Main.I?.SpawnEnemyAt(new Vector2(e.GetProperty("x").GetSingle(), e.TryGetProperty("y", out var y) ? y.GetSingle() : World.Main.I.Player.GlobalPosition.Y), kind);
                 return new { ok = w != null, path = w?.GetPath().ToString() };
             }
             case "free": { var n = Find(S(e, "node")); n.QueueFree(); return new { ok = true }; }
@@ -280,6 +286,8 @@ public partial class DevBridge : Node
             }
             case "actions": return new { ok = true, actions = InputMap.GetActions().Select(a => a.ToString()).Where(a => !a.StartsWith("ui_")).ToArray() };
             case "reload": GetTree().ReloadCurrentScene(); return new { ok = true };
+            case "newgame": Core.Game.I.NewGame(Core.SaveSystem.DevSlot); return new { ok = true };
+            case "give": World.Main.I?.Grant(S(e, "loot"), World.Main.I.Player.GlobalPosition); return new { ok = World.Main.I != null };
             case "pause": GetTree().Paused = S(e, "on", "true") != "false"; return new { ok = true, paused = GetTree().Paused };
             case "timescale": Engine.TimeScale = double.Parse(S(e, "value", "1"), CultureInfo.InvariantCulture); return new { ok = true, value = Engine.TimeScale };
             case "log":
@@ -296,8 +304,8 @@ public partial class DevBridge : Node
             {
                 var m = World.Main.I;
                 if (m == null) return new { ok = false, error = "no Main scene" };
-                var enemies = GetTree().GetNodesInGroup("enemies").OfType<Actors.Warden>().Select(w => new { path = w.GetPath().ToString(), x = w.GlobalPosition.X, hp = w.Hp, state = w.StateName }).ToArray();
-                return new { ok = true, player = new { x = m.Player.GlobalPosition.X, y = m.Player.GlobalPosition.Y, hp = m.Player.Hp, state = m.Player.StateName, facing = m.Player.Facing }, enemies };
+                var enemies = GetTree().GetNodesInGroup("enemies").OfType<Actors.EnemyBase>().Select(w => new { type = w.GetType().Name, path = w.GetPath().ToString(), x = w.GlobalPosition.X, y = w.GlobalPosition.Y, hp = w.Hp, state = w.StateName }).ToArray();
+                return new { ok = true, player = new { x = m.Player.GlobalPosition.X, y = m.Player.GlobalPosition.Y, hp = m.Player.Hp, stamina = (int)m.Player.Stamina, wrath = m.Player.Wrath, state = m.Player.StateName, facing = m.Player.Facing }, run = new { Core.Game.I.Run.Slot, Core.Game.I.Run.Ashes, Core.Game.I.Run.Flasks, Core.Game.I.Run.Altar, Core.Game.I.Run.BossDefeated, keys = Core.Game.I.Run.KeyItems, relics = Core.Game.I.Run.Equipped }, enemies };
             }
             default: throw new Exception("unknown cmd: " + cmd);
         }

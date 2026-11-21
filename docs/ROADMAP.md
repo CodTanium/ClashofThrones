@@ -1,5 +1,5 @@
 ﻿# Roadmap
-**What:** the road from first playable to release, phase by phase. **Updated:** 2026-11-21 · current: **Phase 1 (art pipeline)**
+**What:** the road from first playable to release, phase by phase. **Updated:** 2026-11-21 · current: **Phase 2 (vertical slice polish)**
 Status of the current milestone: [PROJECT_STATUS.md](PROJECT_STATUS.md) · design: [GAME_DESIGN_DOCUMENT.md](GAME_DESIGN_DOCUMENT.md)
 
 ```mermaid
@@ -14,7 +14,7 @@ flowchart LR
 - [x] Gothic dungeon scene: parallax, candle lights, fog, dust
 - [x] DevBridge + `cot` CLI, smoke/screenshot scripts
 
-## Phase 1: Art pipeline + hero (now)
+## Phase 1: Art pipeline + hero
 - [x] Local AI art tools: ComfyUI + SDXL + Pixel Art XL LoRA (`scripts/setup-art-tools.ps1`, outside the repo)
 - [x] `scripts/artgen.ps1`: generate from a prompt or restyle the rig frames (img2img), headless via the ComfyUI API
 - [x] Cleanup step in the game (`--art-clean`): background removal, downscale to the pixel grid, palette quantize, sheet packing
@@ -24,14 +24,17 @@ flowchart LR
 - [ ] Environment pass: bricks, pillars, altar, candles in the same style
 - [ ] Licence decision ([#4](https://github.com/CodTanium/ClashofThrones/issues/4))
 
-## Phase 2: Vertical slice (one polished 10-15 minute area)
-- [ ] 3 enemy types (slow melee ✅, fast flyer, ranged caster) + 1 boss with 2 phases
-- [ ] Healing flasks, altar rest = save + refill + enemy reset
-- [ ] Main menu, pause menu, settings (volume, keybinds, window scale)
-- [ ] Save/load (altar + collected items)
-- [ ] Music (1 area theme, 1 boss theme) + ambience + final SFX
-- [ ] Executions on staggered enemies, hit sparks and blood polish
-- [ ] Real level authored as scenes (TileMapLayer), 4-6 rooms with one shortcut
+## Phase 2: Vertical slice (one polished area) - core done in v0.3.0 (2026-11-21)
+- [x] 4 enemy types (heavy, fast, ranged, flying) + 1 boss with 2 phases
+- [x] Healing flasks, altar rest = save + refill + enemy reset, level up, travel
+- [x] Main menu, pause menu, options (graphics, audio, difficulty, accessibility, controls page)
+- [x] Save/load: 3 slots, autosave at altars
+- [x] Full mechanics package (see [MECHANICS_BACKLOG.md](MECHANICS_BACKLOG.md)): sprint, double jump, wall jump, ledges, ladders, air dash, plunge, heavy/charged, block, bash, executions, Wrath
+- [x] One full level (7 areas) from a text map, with hazards, secrets, chests, gate, key door
+- [x] Synthesised music (explore, boss, menu) + placeholder SFX
+- [ ] Recorded audio / composed music + ambience
+- [ ] Key rebinding, merchant, tutorial signs
+- [ ] Owner playtest + tuning pass
 
 ## Phase 3: Alpha (content complete for 3 areas)
 - [ ] 3 connected areas, map screen

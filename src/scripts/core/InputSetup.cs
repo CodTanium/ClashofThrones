@@ -6,7 +6,8 @@ namespace ClashOfThrones.Core;
 public static class InputSetup
 {
     public const string Left = "move_left", Right = "move_right", Up = "move_up", Down = "move_down";
-    public const string Jump = "jump", Attack = "attack", Dodge = "dodge", Parry = "parry", Interact = "interact", Pause = "pause";
+    public const string Jump = "jump", Attack = "attack", Heavy = "heavy", Dodge = "dodge", Parry = "parry";
+    public const string Heal = "heal", Wrath = "wrath", Interact = "interact", Pause = "pause";
 
     public static void Apply()
     {
@@ -16,11 +17,23 @@ public static class InputSetup
         Bind(Down, Keys(Key.S, Key.Down), Pad(JoyButton.DpadDown), Axis(JoyAxis.LeftY, 1));
         Bind(Jump, Keys(Key.Space, Key.Z), Pad(JoyButton.A));
         Bind(Attack, Keys(Key.J, Key.X), Pad(JoyButton.X), new InputEvent[] { new InputEventMouseButton { ButtonIndex = MouseButton.Left } });
-        Bind(Dodge, Keys(Key.K, Key.C, Key.Shift), Pad(JoyButton.B), Pad(JoyButton.RightShoulder));
-        Bind(Parry, Keys(Key.L, Key.V), Pad(JoyButton.LeftShoulder), Pad(JoyButton.Y));
-        Bind(Interact, Keys(Key.E));
+        Bind(Heavy, Keys(Key.I, Key.C), Pad(JoyButton.Y), new InputEvent[] { new InputEventMouseButton { ButtonIndex = MouseButton.Right } });
+        Bind(Dodge, Keys(Key.K, Key.Shift), Pad(JoyButton.B));          // tap = roll / air dash, hold = sprint
+        Bind(Parry, Keys(Key.L, Key.V), Pad(JoyButton.LeftShoulder));   // hold = block, first 0.2 s = parry
+        Bind(Heal, Keys(Key.R), Pad(JoyButton.RightShoulder));
+        Bind(Wrath, Keys(Key.F), Axis(JoyAxis.TriggerRight, 1));
+        Bind(Interact, Keys(Key.E), Axis(JoyAxis.TriggerLeft, 1));
         Bind(Pause, Keys(Key.Escape), Pad(JoyButton.Start));
     }
+
+    public static readonly (string action, string keys, string pad)[] Help =
+    {
+        ("Move", "A / D", "Left stick"), ("Jump / double jump / wall jump", "Space", "A"),
+        ("Light attack (combo, run, air, down+attack = plunge)", "J", "X"), ("Heavy attack (hold = charge)", "I", "Y"),
+        ("Roll (tap) / Sprint (hold) / Air dash", "K / Shift", "B"), ("Block (hold) / Parry (just before the hit)", "L", "LB"),
+        ("Shield bash", "L + J", "LB + X"), ("Drink flask", "R", "RB"), ("Wrath", "F", "RT"),
+        ("Interact / execute staggered foe", "E / J", "LT / X"), ("Drop through ledge", "S + Space", "Down + A"), ("Pause", "Esc", "Start"),
+    };
 
     static InputEvent[] Keys(params Key[] keys)
     {

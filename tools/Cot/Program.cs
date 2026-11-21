@@ -18,6 +18,8 @@ cot - talk to the running game (start it with scripts\run.ps1 first)
   cot spawn <res://scene.tscn> [parent] [x y]
   cot enemy <x> [y]                        spawn a Grave Warden
   cot free <node>                          delete a node
+  cot give <loot>                          ashes:500 | relic:iron_vow | item:wings_of_ash | key:rusted_key | flask_shard
+  cot newgame                              start a new game in the test slot
   cot gd "<gdscript>"                      run a GDScript snippet (vars: root, scene)
   cot press|release <action>               hold / let go of an input action
   cot tap <action> [seconds]               short press
@@ -59,6 +61,8 @@ switch (argv[0])
         break;
     case "enemy": cmd["cmd"] = "spawn_enemy"; cmd["x"] = float.Parse(A(1, "600")); if (argv.Count > 2) cmd["y"] = float.Parse(A(2)); break;
     case "free": cmd["cmd"] = "free"; cmd["node"] = A(1); break;
+    case "give": cmd["cmd"] = "give"; cmd["loot"] = A(1); break;          // ashes:500, relic:iron_vow, item:wings_of_ash, key:rusted_key, flask_shard
+    case "newgame": cmd["cmd"] = "newgame"; break;
     case "gd": cmd["cmd"] = "gd"; cmd["code"] = string.Join(' ', argv.Skip(1)); break;
     case "press": case "release": cmd["cmd"] = argv[0]; cmd["action"] = A(1); break;
     case "tap": cmd["cmd"] = "tap"; cmd["action"] = A(1); cmd["seconds"] = A(2, "0.08"); break;

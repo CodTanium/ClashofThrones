@@ -36,8 +36,8 @@ public sealed class Pose
     }
 }
 
-public enum HeadKind { Helmet, Hood }
-public enum WeaponKind { Sword, Cleaver }
+public enum HeadKind { Helmet, Hood, Skull, Mitre }
+public enum WeaponKind { Sword, Cleaver, None, Bow, Staff }
 
 /// <summary>Colours and parts of one character built on the rig.</summary>
 public sealed class Style
@@ -66,6 +66,49 @@ public sealed class Style
             Weapon = new Ramp("#eef1f6", "#b8bdc8", "#7d828f", "#454955"),
             Head = steel,
             Skirt = new Ramp("#7d828e", "#5d616d", "#3f424c", "#24262d"),
+        };
+    }
+
+    public static Style Ghoul()
+    {
+        var skin = new Ramp("#b9b6a0", "#87856f", "#5a5948", "#30302a");
+        var rag = new Ramp("#4a4f45", "#33372f", "#22251f", "#121410");
+        return new Style
+        {
+            Scale = 0.95f, Bulk = 0.8f,
+            Armor = rag, ArmorFar = rag.Darker(0.3f), Limb = skin, LimbFar = skin.Darker(0.32f), Cloth = rag, ClothFar = rag.Darker(0.3f),
+            Leather = new Ramp("#4a3c30", "#33291f", "#211a14", "#110d0a"), Gold = rag, Weapon = new Ramp("#e8e2c8", "#b8b090", "#807a60", "#403c30"),
+            Head = skin, Skirt = rag, Eye = Color.FromHtml("#ff5a3c"),
+            Cape = false, Shield = false, Tabard = false, HeadKind = HeadKind.Skull, WeaponKind = WeaponKind.None,
+        };
+    }
+
+    public static Style Archer()
+    {
+        var bone = new Ramp("#e6dcc0", "#b5a888", "#7f745a", "#423b2c");
+        var cloth = new Ramp("#5a3a4a", "#3e2733", "#281922", "#140c11");
+        return new Style
+        {
+            Scale = 0.98f, Bulk = 0.85f,
+            Armor = cloth, ArmorFar = cloth.Darker(0.3f), Limb = bone, LimbFar = bone.Darker(0.32f), Cloth = cloth, ClothFar = cloth.Darker(0.3f),
+            Leather = new Ramp("#7a5a3c", "#57402a", "#3a2a1c", "#1e150e"), Gold = new Ramp("#d8c070", "#a8903e", "#705e24", "#3a3010"),
+            Weapon = new Ramp("#f0e8d0", "#c8bfa0", "#8f876c", "#4a4536"), Head = bone, Skirt = cloth, Eye = Color.FromHtml("#7ae0ff"),
+            Cape = true, Shield = false, Tabard = false, HeadKind = HeadKind.Skull, WeaponKind = WeaponKind.Bow,
+        };
+    }
+
+    public static Style Abbot()
+    {
+        var robe = new Ramp("#3e5a5e", "#2a3f44", "#1b2a2e", "#0d1517");
+        var flesh = new Ramp("#9fb3a8", "#71857b", "#4b5a52", "#28302b");
+        return new Style
+        {
+            Scale = 1.65f, Bulk = 1.4f,
+            Armor = robe, ArmorFar = robe.Darker(0.3f), Limb = flesh, LimbFar = flesh.Darker(0.3f),
+            Cloth = new Ramp("#8a2e3a", "#5e1d27", "#3c1219", "#1e080c"), ClothFar = new Ramp("#8a2e3a", "#5e1d27", "#3c1219", "#1e080c").Darker(0.3f),
+            Leather = new Ramp("#5a4632", "#3e3022", "#281f16", "#140f0a"), Gold = new Ramp("#f0d070", "#c09a38", "#86681e", "#463408"),
+            Weapon = robe, Head = new Ramp("#2a3f44", "#1b2a2e", "#111b1e", "#070c0d"), Skirt = robe, Eye = Color.FromHtml("#8ff6ff"),
+            Cape = true, Shield = false, Tabard = true, HeadKind = HeadKind.Mitre, WeaponKind = WeaponKind.Staff,
         };
     }
 
@@ -125,7 +168,7 @@ public static class CharacterRig
         j.KneeB = j.Hip + Dir(p.ThighB) * thigh; j.FootB = j.KneeB + Dir(p.ThighB - p.KneeB) * shin;
         j.ElbowF = j.ShoulderF + Dir(p.ArmF) * upper; j.HandF = j.ElbowF + Dir(p.ArmF + p.ElbowF) * fore;
         j.ElbowB = j.ShoulderB + Dir(p.ArmB) * upper; j.HandB = j.ElbowB + Dir(p.ArmB + p.ElbowB) * fore;
-        float blade = (s.WeaponKind == WeaponKind.Sword ? 44 : 34) * k;
+        float blade = s.WeaponKind switch { WeaponKind.Sword => 44, WeaponKind.Staff => 58, WeaponKind.None => 6, _ => 34 } * k;
         j.WeaponBase = j.HandF - Dir(p.Weapon) * 5 * k;
         j.WeaponTip = j.HandF + Dir(p.Weapon) * blade;
 
@@ -255,6 +298,28 @@ public static class CharacterRig
             // rim highlight top-left
             c.Line(head + bodyDir * 6 * k - fwd * 4 * k, head + bodyDir * 7.5f * k + fwd * 1 * k, s.Head.Hi);
         }
+        else if (s.HeadKind == HeadKind.Skull)
+        {
+            // gaunt bald skull, jaw jutting forward, hollow eyes
+            c.Circle(head, 7f * k, s.Head, 0.1f);
+            c.Capsule(head + fwd * 3 * k - bodyDir * 4 * k, head + fwd * 7 * k - bodyDir * 6 * k, 2.6f * k, s.Head);
+            c.Circle(head + fwd * 3.5f * k + bodyDir * 0.5f * k, 1.8f * k, new Ramp(s.Head.Deep, s.Head.Deep, s.Head.Deep, s.Head.Deep));
+            var e = head + fwd * 3.5f * k + bodyDir * 0.5f * k;
+            c.Set((int)e.X, (int)e.Y, s.Eye);
+            c.Line(head + fwd * 4 * k - bodyDir * 6 * k, head + fwd * 8 * k - bodyDir * 6 * k, s.Head.Deep);
+        }
+        else if (s.HeadKind == HeadKind.Mitre)
+        {
+            // drowned abbot: tall split mitre over a shadowed face, gold trim, glowing eyes
+            c.Circle(head, 8f * k, s.Head, 0.05f);
+            var baseL = head + bodyDir * 4 * k - fwd * 7 * k; var baseR = head + bodyDir * 4 * k + fwd * 7 * k;
+            c.Poly(new[] { baseL, baseR, head + bodyDir * 20 * k + fwd * 2 * k, head + bodyDir * 16 * k, head + bodyDir * 22 * k - fwd * 3 * k }, s.Gold, 0.1f);
+            c.Line(baseL, baseR, s.Gold.Deep);
+            c.Line(head + bodyDir * 6 * k, head + bodyDir * 18 * k, s.Cloth.Mid);
+            c.Ellipse(head + fwd * 3.5f * k - bodyDir * 1 * k, 4f * k, 5f * k, s.Head.Deep);
+            var e = head + fwd * 4.5f * k - bodyDir * 0.5f * k;
+            c.Rect((int)e.X, (int)e.Y, 2, 1, s.Eye); c.Rect((int)e.X + 3, (int)e.Y, 2, 1, s.Eye);
+        }
         else
         {
             // hood: a pointed cowl leaning forward, dark face opening with glowing eyes
@@ -296,6 +361,34 @@ public static class CharacterRig
             c.Capsule(guard - n * 4.5f * k, guard + n * 4.5f * k, 1.3f * k, s.Gold);
             c.Capsule(j.WeaponBase, guard, 1.2f * k, s.Leather);
             c.Circle(j.WeaponBase, 1.8f * k, s.Gold, 0.2f);
+        }
+        else if (s.WeaponKind == WeaponKind.None)
+        {
+            // claws: three short hooks from the hand
+            for (int i = -1; i <= 1; i++) c.Line(j.HandF + n * i * 1.5f, j.HandF + d * 6 * k + n * i * 2.5f, s.Weapon.Hi);
+        }
+        else if (s.WeaponKind == WeaponKind.Bow)
+        {
+            // recurve bow held vertically in the front hand, string to the back hand
+            var ad = (j.HandF - j.ElbowF).Normalized();
+            var up = new Vector2(-ad.Y, ad.X); if (up.Y > 0) up = -up;
+            d = ad;
+            var top = j.HandF + up * 16 * k - d * 2 * k; var bot = j.HandF - up * 16 * k - d * 2 * k;
+            var mid = j.HandF + d * 4 * k;
+            c.Capsule(top, mid, 1.2f * k, s.Leather); c.Capsule(mid, bot, 1.2f * k, s.Leather);
+            var pull = p.Weapon > 100 ? j.HandB : j.HandF; // Weapon > 100 = drawn
+            c.Line(top, pull, s.Weapon.Hi); c.Line(pull, bot, s.Weapon.Hi);
+            if (p.Weapon > 100) c.Line(pull, j.HandF + d * 12 * k, s.Gold.Mid);  // nocked arrow
+        }
+        else if (s.WeaponKind == WeaponKind.Staff)
+        {
+            // long crozier staff with a hooked, censer-like head
+            var tail = j.HandF - d * 18 * k;
+            c.Capsule(tail, j.WeaponTip, 1.6f * k, s.Leather);
+            var hook = j.WeaponTip;
+            c.Circle(hook, 5 * k, s.Gold, 0.15f);
+            c.Circle(hook + n * 4 * k + d * 3 * k, 2.4f * k, s.Gold, 0.2f);
+            c.Circle(hook, 2 * k, new Ramp("#9cf0ff", "#4fb8d0", "#2a6f86", "#123744"));
         }
         else
         {

@@ -36,43 +36,6 @@ public partial class Candles : Node2D
     }
 }
 
-/// <summary>Checkpoint altar: touch it to light it, heal and set the respawn point.</summary>
-public partial class Checkpoint : Area2D
-{
-    [Signal] public delegate void ActivatedEventHandler(Checkpoint cp);
-
-    public bool Lit { get; private set; }
-    Sprite2D _spr;
-    PointLight2D _light;
-
-    public override void _Ready()
-    {
-        CollisionLayer = 0; CollisionMask = Layers.Player; Monitoring = true;
-        AddChild(new CollisionShape2D { Shape = new RectangleShape2D { Size = new Vector2(48, 60) }, Position = new Vector2(0, -30) });
-        _spr = new Sprite2D { Texture = ArtLibrary.Get("altar"), Hframes = 2, Offset = new Vector2(0, -24) };
-        AddChild(_spr);
-        _light = new PointLight2D { Texture = ArtLibrary.RadialLight(), Color = new Color(1f, 0.72f, 0.42f), Energy = 0f, TextureScale = 1.1f, Position = new Vector2(0, -28) };
-        AddChild(_light);
-        BodyEntered += b => { if (b is Player p && !p.IsDead) Activate(p); };
-    }
-
-    public void SetLit(bool lit)
-    {
-        Lit = lit; _spr.Frame = lit ? 1 : 0;
-        var tw = CreateTween();
-        tw.TweenProperty(_light, "energy", lit ? 1.3f : 0f, 0.6);
-    }
-
-    void Activate(Player p)
-    {
-        p.Heal();
-        if (Lit) return;
-        SetLit(true);
-        Sfx.Rest(this);
-        EmitSignal(SignalName.Activated, this);
-    }
-}
-
 /// <summary>Follow camera: look-ahead, smoothing, whole-pixel positions (no sub-pixel blur) and trauma shake.</summary>
 public partial class CameraRig : Camera2D
 {
