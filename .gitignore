@@ -13,3 +13,5 @@ dist/
 *.translation
 export_presets.cfg.bak
 
+# exported builds and zips (rebuilt with scripts\package.ps1)
+build/

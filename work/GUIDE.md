@@ -9,7 +9,8 @@ How to build, test and run Clash of Thrones.
 | Talk to the running game | `.\scripts\cot.ps1 help` |
 | Bake art to PNG | `.\scripts\bake-art.ps1 [-Use]` |
 | AI art tools (once) / generate | `.\scripts\setup-art-tools.ps1` / `.\scripts\artgen.ps1 -Prompt "..."` |
-| Hero sheet in the AI style | `.\scripts\hero-restyle.ps1` |
+| Any sheet in the AI style | `.\scripts\restyle.ps1 -Rig <name>` (hero, warden, ghoul, archer, abbot) |
+| Test package (Windows zip) | `.\scripts\package.ps1` |
 
 ## End of session
 1. `.\scripts\smoke.ps1` passes.

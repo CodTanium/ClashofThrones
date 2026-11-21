@@ -60,6 +60,15 @@ public partial class DevBridge : Node
         string Abs(string p) => p.StartsWith("res://") || p.StartsWith("user://") ? ProjectSettings.GlobalizePath(p) : System.IO.Path.GetFullPath(p);
         int I(string k, int d) => a.TryGetValue(k, out var v) && int.TryParse(v, out var n) ? n : d;
         SpriteSheet Sheet() => ArtLibrary.Sheet(a.TryGetValue("rig", out var r) ? r : "hero");
+        if (a.ContainsKey("selftest"))
+        {
+            // works in release builds too: proves the packed game has its level and art
+            bool level = FileAccess.FileExists(World.Main.LevelPath);
+            int rows = level ? World.LevelData.Load(World.Main.LevelPath).Height : 0;
+            bool art = ArtLibrary.Get("hero") != null && ArtLibrary.Get("abbot") != null && ArtLibrary.Get("terrain") != null;
+            GD.Print($"[selftest] debug={OS.IsDebugBuild()} level={level} rows={rows} art={art} -> {(level && rows > 0 && art ? "PASS" : "FAIL")}");
+            return true;
+        }
         if (a.TryGetValue("export-rig", out var exp))
         {
             int n = ArtClean.ExportRigFrames(Sheet(), Abs(exp), I("scale", 8), Color.FromHtml(a.GetValueOrDefault("bg", "#7a7680")));

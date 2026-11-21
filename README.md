@@ -53,6 +53,10 @@ Needs **Godot 4.7.2 .NET** (`winget install GodotEngine.GodotEngine.Mono`) and t
 .\scripts\shot.ps1           # screenshot into reports\screenshots\
 ```
 
+## 📦 Test build
+`.\scripts\package.ps1` exports a Windows release and zips it: `build\ClashOfThrones-v<version>-windows.zip` (with a README for testers).
+Planned channels: itch.io test page now ([#12](https://github.com/CodTanium/ClashofThrones/issues/12)), Steam later ([#13](https://github.com/CodTanium/ClashofThrones/issues/13)), Apple/mobile later ([#14](https://github.com/CodTanium/ClashofThrones/issues/14)).
+
 ## 🏗️ Architecture
 ```mermaid
 flowchart LR

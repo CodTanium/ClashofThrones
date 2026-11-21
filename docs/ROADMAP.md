@@ -52,9 +52,27 @@ flowchart LR
 - [ ] Credits + licences complete ([ASSET_LICENCES.md](ASSET_LICENCES.md))
 - [ ] 1.0 tag, changelog, trailer
 
+## Distribution
+| Channel | Status | Needs |
+|---|---|---|
+| itch.io (Windows zip, unlisted test page) | 🔜 now ([#12](https://github.com/CodTanium/ClashofThrones/issues/12)) | free itch.io account (owner); `scripts\package.ps1` builds the zip |
+| Steam (playtest / demo) | later ([#13](https://github.com/CodTanium/ClashofThrones/issues/13)) | Steamworks account, 100 USD per game, store assets, 30+ days lead time |
+| Apple iOS / Mac App Store, mobile | later ([#14](https://github.com/CodTanium/ClashofThrones/issues/14)) | 99 USD/year Apple Developer Program, a Mac with Xcode, touch controls |
+
 ## Open issues
 | # | Title |
 |---|---|
 | [#3](https://github.com/CodTanium/ClashofThrones/issues/3) | Sync the private project notes after each session |
 | [#4](https://github.com/CodTanium/ClashofThrones/issues/4) | Choose a licence for the public repository |
+| [#5](https://github.com/CodTanium/ClashofThrones/issues/5) | Owner playtest and tuning pass (v0.3.0) |
+| [#6](https://github.com/CodTanium/ClashofThrones/issues/6) | Real audio: recorded SFX and composed music |
+| [#7](https://github.com/CodTanium/ClashofThrones/issues/7) | Key and button rebinding |
+| [#8](https://github.com/CodTanium/ClashofThrones/issues/8) | Merchant NPC |
+| [#9](https://github.com/CodTanium/ClashofThrones/issues/9) | Hand polish of the AI-painted sprite sheets |
+| [#10](https://github.com/CodTanium/ClashofThrones/issues/10) | Bug: pause menu opened by itself once |
+| [#11](https://github.com/CodTanium/ClashofThrones/issues/11) | Phase 3: second area and map screen |
+| [#12](https://github.com/CodTanium/ClashofThrones/issues/12) | Test build on itch.io (Windows) |
+| [#13](https://github.com/CodTanium/ClashofThrones/issues/13) | Steam demo / playtest (later) |
+| [#14](https://github.com/CodTanium/ClashofThrones/issues/14) | Apple and mobile builds (later) |
+Pull requests [#1](https://github.com/CodTanium/ClashofThrones/pull/1), [#2](https://github.com/CodTanium/ClashofThrones/pull/2): Dependabot updates for the GitHub Actions, waiting for the owner.
 

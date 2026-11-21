@@ -1,6 +1,10 @@
 ﻿# Changelog
 Newest first.
 
+## 0.3.1 (2026-11-21)
+- Windows export preset and `scripts/package.ps1` (release build + zip with a tester README) for an itch.io test page.
+- Issues #5-#14 for every open item (playtest, audio, rebinding, merchant, art polish, self-pause bug, phase 3, itch.io, Steam, Apple/mobile); roadmap distribution table.
+
 ## 0.3.0 (2026-11-21)
 - Title menu (continue, new game, 3 save slots, load, delete, options, quit); pause menu; altar menu (rest, level up, travel, relics).
 - Save system: JSON slots, autosave at altars and after death, manual save. Options: graphics, audio, difficulty, accessibility, controls.
