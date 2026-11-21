@@ -55,8 +55,9 @@ flowchart LR
 ## Distribution
 | Channel | Status | Needs |
 |---|---|---|
-| itch.io (Windows zip, unlisted test page) | 🔜 now ([#12](https://github.com/CodTanium/ClashofThrones/issues/12)) | free itch.io account (owner); `scripts\package.ps1` builds the zip |
-| Steam (playtest / demo) | later ([#13](https://github.com/CodTanium/ClashofThrones/issues/13)) | Steamworks account, 100 USD per game, store assets, 30+ days lead time |
+| GitHub Release: demo installer (Inno Setup) + zip | ✅ v0.3.1-demo | `scripts\installer.ps1` |
+| itch.io (unlisted test page) | optional ([#12](https://github.com/CodTanium/ClashofThrones/issues/12)) | free itch.io account (owner); upload the installer or zip |
+| Steam (demo / playtest) | files ready, account pending ([#13](https://github.com/CodTanium/ClashofThrones/issues/13), [STEAM.md](STEAM.md)) | Steamworks account, 100 USD per game, store assets, 30+ days lead time |
 | Apple iOS / Mac App Store, mobile | later ([#14](https://github.com/CodTanium/ClashofThrones/issues/14)) | 99 USD/year Apple Developer Program, a Mac with Xcode, touch controls |
 
 ## Open issues

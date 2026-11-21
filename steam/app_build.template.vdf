@@ -1,0 +1,21 @@
+"AppBuild"
+{
+	"AppID"			"__APPID__"
+	"Desc"			"__DESC__"
+	"ContentRoot"	"__CONTENT__"
+	"BuildOutput"	"__OUTPUT__"
+	"SetLive"		"__BRANCH__"
+	"Preview"		"__PREVIEW__"
+	"Depots"
+	{
+		"__DEPOTID__"
+		{
+			"FileMapping"
+			{
+				"LocalPath"		"*"
+				"DepotPath"		"."
+				"recursive"		"1"
+			}
+		}
+	}
+}

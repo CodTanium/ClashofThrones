@@ -3,6 +3,9 @@ Newest first.
 
 ## 0.3.1 (2026-11-21)
 - Windows export preset and `scripts/package.ps1` (release build + zip with a tester README) for an itch.io test page.
+- Demo installer: `installer/ClashOfThrones.iss` + `scripts/installer.ps1` (Inno Setup 6): per-user install, Start-menu/desktop shortcuts, uninstaller; game icon (`scripts/make-icon.ps1` → `src/icon.ico`, also used for the exe).
+- GitHub Release `v0.3.1-demo` with the installer and the zip.
+- Steam prep: `steam/app_build.template.vdf`, `scripts/steam-upload.ps1` (SteamPipe via steamcmd), `docs/STEAM.md` checklist.
 - Issues #5-#14 for every open item (playtest, audio, rebinding, merchant, art polish, self-pause bug, phase 3, itch.io, Steam, Apple/mobile); roadmap distribution table.
 
 ## 0.3.0 (2026-11-21)

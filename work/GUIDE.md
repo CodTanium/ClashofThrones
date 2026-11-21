@@ -11,6 +11,8 @@ How to build, test and run Clash of Thrones.
 | AI art tools (once) / generate | `.\scripts\setup-art-tools.ps1` / `.\scripts\artgen.ps1 -Prompt "..."` |
 | Any sheet in the AI style | `.\scripts\restyle.ps1 -Rig <name>` (hero, warden, ghoul, archer, abbot) |
 | Test package (Windows zip) | `.\scripts\package.ps1` |
+| Demo installer (setup.exe) | `.\scripts\installer.ps1` |
+| Upload to Steam (needs an App ID) | `.\scripts\steam-upload.ps1 -AppId .. -DepotId .. -SteamUser ..` |
 
 ## End of session
 1. `.\scripts\smoke.ps1` passes.

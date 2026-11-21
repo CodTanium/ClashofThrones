@@ -1,0 +1,12 @@
+﻿CLASH OF THRONES - DEMO (pre-alpha)
+
+A 2D dark-fantasy action platformer. This demo contains one full area,
+The Sunken Nave, with its boss.
+
+- It is an early test build: expect rough edges.
+- Saves and settings are kept in your user folder and are NOT removed when
+  you uninstall (delete %APPDATA%\Godot\app_userdata\Clash of Thrones to reset).
+- Windows may warn about an unknown publisher: the demo is not code-signed yet.
+
+Feedback and bug reports:
+https://github.com/CodTanium/ClashofThrones/issues

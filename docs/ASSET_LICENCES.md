@@ -14,6 +14,7 @@ Installed outside the repo by `scripts/setup-art-tools.ps1`. Images they produce
 | Stable Diffusion XL base 1.0 | huggingface.co/stabilityai/stable-diffusion-xl-base-1.0 | CreativeML Open RAIL++-M | yes (use-based restrictions apply) |
 | Pixel Art XL (LoRA) | huggingface.co/nerijs/pixel-art-xl | CreativeML Open RAIL-M | yes (use-based restrictions apply) |
 | SDXL VAE fp16 fix | huggingface.co/madebyollin/sdxl-vae-fp16-fix | MIT | yes |
+| Inno Setup 6 (installer builder) | jrsoftware.org | Inno Setup licence (free, commercial use allowed) | n/a (tool) |
 | ComfyUI (software) | github.com/comfyanonymous/ComfyUI | GPL-3.0 (tool only, not distributed with the game) | n/a |
 
 ## Generated with the AI tools

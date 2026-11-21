@@ -53,9 +53,13 @@ Needs **Godot 4.7.2 .NET** (`winget install GodotEngine.GodotEngine.Mono`) and t
 .\scripts\shot.ps1           # screenshot into reports\screenshots\
 ```
 
-## 📦 Test build
-`.\scripts\package.ps1` exports a Windows release and zips it: `build\ClashOfThrones-v<version>-windows.zip` (with a README for testers).
-Planned channels: itch.io test page now ([#12](https://github.com/CodTanium/ClashofThrones/issues/12)), Steam later ([#13](https://github.com/CodTanium/ClashofThrones/issues/13)), Apple/mobile later ([#14](https://github.com/CodTanium/ClashofThrones/issues/14)).
+## ⬇️ Download the demo (Windows)
+Get **ClashOfThrones-v0.3.1-Demo-Setup.exe** from the [Releases page](https://github.com/CodTanium/ClashofThrones/releases) and run it
+(installs per user, no admin rights; Start-menu + optional desktop shortcut; uninstall from Windows Settings > Apps).
+Windows may warn about an unknown publisher because the demo isn't code-signed yet: **More info → Run anyway**. A plain `.zip` is attached too.
+
+Build it yourself: `.\scripts\installer.ps1` (Inno Setup 6) → `build\ClashOfThrones-v<version>-Demo-Setup.exe`; `.\scripts\package.ps1` → zip only.
+Steam: upload files are ready, the account side is pending - see [docs/STEAM.md](docs/STEAM.md) ([#13](https://github.com/CodTanium/ClashofThrones/issues/13)). Apple/mobile: later ([#14](https://github.com/CodTanium/ClashofThrones/issues/14)).
 
 ## 🏗️ Architecture
 ```mermaid

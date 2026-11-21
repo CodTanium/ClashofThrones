@@ -72,7 +72,10 @@ World objects are remembered in the save by `kind_x_y` ids (opened chests, pulle
 ## Exporting a build
 1. Once per PC: Godot 4.7.2 **mono** export templates in `%APPDATA%\Godot\export_templates\4.7.2.stable.mono\` (Godot editor: Editor > Manage Export Templates > Download, or unzip `Godot_v4.7.2-stable_mono_export_templates.tpz` from the official GitHub release, folder `templates/`).
 2. `.\scripts\package.ps1` → `build\windows\` (exe with the game packed inside + `data_ClashOfThrones_windows_x86_64\` with the .NET runtime) and `build\ClashOfThrones-v<version>-windows.zip`.
-Preset: `src/export_presets.cfg` ("Windows Desktop", x86_64, includes `levels/*.txt`). Release builds have no DevBridge. `build/` is not in git.
+Preset: `src/export_presets.cfg` ("Windows Desktop", x86_64, includes `levels/*.txt`, icon `res://icon.ico`). Release builds have no DevBridge. `build/` is not in git.
+3. `.\scripts\installer.ps1` → `build\ClashOfThrones-v<version>-Demo-Setup.exe` (Inno Setup 6, script `installer/ClashOfThrones.iss`; per-user install to `%LOCALAPPDATA%\Programs\Clash of Thrones`, keeps saves on uninstall).
+4. Self-test of any build: `ClashOfThrones.exe --headless -- --selftest` prints `PASS` when the level and art load.
+5. Steam: `.\scripts\steam-upload.ps1` (see [STEAM.md](STEAM.md)).
 
 ## DevBridge additions (v0.3)
 TCP: `status` (player, run, enemies with type/state/hp), `give {loot}`, `newgame`, `spawn_enemy {x,y,kind}`. Startup script steps: `newgame`, `continue N`, `menu`, `give loot`, `tp x y`.
