@@ -1,4 +1,4 @@
-# Project status
+﻿# Project status
 **What:** where Clash of Thrones stands. **Updated:** 2026-11-21 · version 0.1.0 (pre-alpha)
 
 ## Milestone 1: first playable (✅ = verified with output or a screenshot)
@@ -14,6 +14,14 @@
 | 8 | First scene: gothic brick dungeon, 5 parallax layers, 2D lights, candles, fog, dust, pixel-exact camera | ✅ |
 | 9 | Movement + combat: acceleration, variable jump, coyote, buffer, combo, hitboxes, i-frames, knockback, hit-stop, shake | ✅ |
 | 10 | Enemy (slow melee), checkpoint, death + respawn | ✅ tested (respawn at 2nd altar x=1536) |
+
+## Milestone 2 (Phase 1): art pipeline
+| Item | Status |
+|---|---|
+| ComfyUI + SDXL + Pixel Art XL installed locally (RTX 3070, CUDA ok) | ✅ |
+| artgen.ps1 (txt2img / img2img via API), hero-restyle.ps1, in-engine cleanup | ✅ |
+| Hero sheet restyled (54 frames) and used in game | ✅ screenshot 05 |
+| Owner approval of the hero look | waiting |
 
 ## Next
 - Final-quality hero art (local Stable Diffusion pixel-art model + cleanup tool, or hand-painted over the baked PNGs).

@@ -5,4 +5,4 @@
 |---|---|---|---|
 | 1 | HUD message label was offset to the right (anchor preset + position) | low | fixed 2026-11-21 |
 | 2 | Player and enemies pass through each other (no body blocking) | design | open: decide |
-| 3 | Hero/enemy art is placeholder quality | art | open: art pass |
+| 3 | Hero/enemy art is placeholder quality | art | open: art pass || 4 | Restyled hero: small detail changes between frames (shield/tabard look) | low | open: hand polish |

@@ -31,3 +31,18 @@ Bake art: `-- --bake-art=res://art/`.
 .\scripts\cot.ps1 gd "scene.get_node('Player').Hp"
 .\scripts\cot.ps1 shot reports\screenshots\now.png
 ```
+## Art pipeline (AI-assisted, local)
+```mermaid
+flowchart LR
+    Rig[Procedural rig frames<br/>exact poses] -->|--export-rig x8| Up[upscaled frames]
+    Up -->|artgen.ps1 img2img<br/>SDXL + Pixel Art XL| AI[restyled frames]
+    AI -->|--art-restyle| Sheet[clean sheet: rig silhouette mask<br/>+ one shared palette]
+    Sheet --> PNG[src/art/hero.png<br/>overrides the generated sheet]
+```
+| Step | Command |
+|---|---|
+| Install ComfyUI + models (once, ~10 GB, outside the repo) | `scripts\setup-art-tools.ps1` |
+| Concept from text | `scripts\artgen.ps1 -Prompt "..." -Out reports\art\x.png -Count 4` |
+| Hero sheet in the new style | `scripts\hero-restyle.ps1` |
+| Clean one image to a game frame | `godot --headless --path src -- --art-clean=in.png --out=out.png --height=96` |
+Why the rig stays in the loop: AI frames alone don't match from frame to frame. Using the rig's silhouette as a mask and one shared palette keeps every frame the same shape and colour.

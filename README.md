@@ -1,10 +1,10 @@
-<div align="center">
+﻿<div align="center">
 
 <img src="docs/images/banner.svg" width="100%" alt="Clash of Thrones">
 
 **A 2D dark-fantasy action platformer: a lone knight, a drowned cathedral, and every swing has weight.**
 
-![version](https://img.shields.io/badge/version-0.1.0-c23a33?style=for-the-badge)
+![version](https://img.shields.io/badge/version-0.2.0-c23a33?style=for-the-badge)
 ![status](https://img.shields.io/badge/status-pre--alpha-8a2420?style=for-the-badge)
 ![engine](https://img.shields.io/badge/Godot-4.7.2%20.NET-478cbf?style=for-the-badge&logo=godotengine&logoColor=white)
 ![lang](https://img.shields.io/badge/C%23-.NET%2010-512bd4?style=for-the-badge&logo=dotnet&logoColor=white)
@@ -62,7 +62,7 @@ More: [docs/TECHNICAL.md](docs/TECHNICAL.md).
 ## 📚 Documentation
 | I want to... | Go to |
 |---|---|
-| see where the project stands | [docs/PROJECT_STATUS.md](docs/PROJECT_STATUS.md) |
+| see where the project stands | [docs/PROJECT_STATUS.md](docs/PROJECT_STATUS.md) · [docs/ROADMAP.md](docs/ROADMAP.md) |
 | understand the game | [docs/GAME_DESIGN_DOCUMENT.md](docs/GAME_DESIGN_DOCUMENT.md) |
 | make art that fits | [docs/ART_DIRECTION.md](docs/ART_DIRECTION.md) |
 | check asset licences | [docs/ASSET_LICENCES.md](docs/ASSET_LICENCES.md) |
@@ -75,6 +75,6 @@ More: [docs/TECHNICAL.md](docs/TECHNICAL.md).
 `src/` Godot project (C# in `src/scripts/`) · `tools/Cot/` DevBridge CLI · `scripts/` build, smoke, screenshot, run
 `docs/` design, art, licences, status · `reports/` screenshots + issue reports · `work/` plan, baseline, handover, GitHub setup
 
-## ⚖️ Originality
+## âš–ï¸ Originality
 Original IP. All characters, art, names, places and sounds are made for this project (currently generated in code).
 No assets from other games are used.

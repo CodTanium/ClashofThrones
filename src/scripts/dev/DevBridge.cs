@@ -41,6 +41,7 @@ public partial class DevBridge : Node
             GetTree().Quit();
             return;
         }
+        if (RunArtTool(args)) { GetTree().Quit(); return; }
         if (!OS.IsDebugBuild()) { SetProcess(false); return; }
 
         int port = DefaultPort;
@@ -51,6 +52,38 @@ public partial class DevBridge : Node
 
         if (args.TryGetValue("script", out var script))
             foreach (var step in script.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)) _script.Enqueue(step);
+    }
+
+    /// <summary>Offline art commands (art pipeline). Returns true when one ran.</summary>
+    static bool RunArtTool(Dictionary<string, string> a)
+    {
+        string Abs(string p) => p.StartsWith("res://") || p.StartsWith("user://") ? ProjectSettings.GlobalizePath(p) : System.IO.Path.GetFullPath(p);
+        int I(string k, int d) => a.TryGetValue(k, out var v) && int.TryParse(v, out var n) ? n : d;
+        SpriteSheet Sheet() => a.TryGetValue("rig", out var r) && r == "warden" ? ArtLibrary.Warden : ArtLibrary.Hero;
+        if (a.TryGetValue("export-rig", out var exp))
+        {
+            int n = ArtClean.ExportRigFrames(Sheet(), Abs(exp), I("scale", 8), Color.FromHtml(a.GetValueOrDefault("bg", "#7a7680")));
+            GD.Print($"[DevBridge] exported {n} rig frames to {Abs(exp)}");
+            return true;
+        }
+        if (a.TryGetValue("art-restyle", out var dir))
+        {
+            var sheet = ArtClean.RestyleSheet(Abs(dir), Sheet(), I("colors", 32));
+            string outp = Abs(a.GetValueOrDefault("out", "res://art/hero.png"));
+            sheet.SavePng(outp);
+            GD.Print($"[DevBridge] restyled sheet {outp}");
+            return true;
+        }
+        if (a.TryGetValue("art-clean", out var src))
+        {
+            var img = Image.LoadFromFile(Abs(src));
+            var res = ArtClean.CleanCharacter(img, I("height", 96), I("colors", 28), ArtLibrary.HeroFrame, ArtLibrary.HeroOrigin);
+            string outp = Abs(a.GetValueOrDefault("out", "user://clean.png"));
+            res.SavePng(outp);
+            GD.Print($"[DevBridge] cleaned {src} -> {outp}");
+            return true;
+        }
+        return false;
     }
 
     static Dictionary<string, string> ParseArgs()
