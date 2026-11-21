@@ -24,6 +24,22 @@ public static class InputSetup
         Bind(Wrath, Keys(Key.F), Axis(JoyAxis.TriggerRight, 1));
         Bind(Interact, Keys(Key.E), Axis(JoyAxis.TriggerLeft, 1));
         Bind(Pause, Keys(Key.Escape), Pad(JoyButton.Start));
+
+        // menus: Xbox A = press the focused button, B = back (Godot's defaults only cover the keyboard here)
+        AddOnce("ui_accept", new InputEventJoypadButton { ButtonIndex = JoyButton.A });
+        AddOnce("ui_cancel", new InputEventJoypadButton { ButtonIndex = JoyButton.B });
+        foreach (var (act, btn, axis, dir) in new[] { ("ui_left", JoyButton.DpadLeft, JoyAxis.LeftX, -1f), ("ui_right", JoyButton.DpadRight, JoyAxis.LeftX, 1f), ("ui_up", JoyButton.DpadUp, JoyAxis.LeftY, -1f), ("ui_down", JoyButton.DpadDown, JoyAxis.LeftY, 1f) })
+        {
+            AddOnce(act, new InputEventJoypadButton { ButtonIndex = btn });
+            AddOnce(act, new InputEventJoypadMotion { Axis = axis, AxisValue = dir });
+        }
+    }
+
+    static void AddOnce(string action, InputEvent e)
+    {
+        if (!InputMap.HasAction(action)) InputMap.AddAction(action);
+        foreach (var have in InputMap.ActionGetEvents(action)) if (have.IsMatch(e, true)) return;
+        InputMap.ActionAddEvent(action, e);
     }
 
     public static readonly (string action, string keys, string pad)[] Help =

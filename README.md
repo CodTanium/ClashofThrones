@@ -1,10 +1,10 @@
-﻿<div align="center">
+<div align="center">
 
 <img src="docs/images/banner.svg" width="100%" alt="Clash of Thrones">
 
 **A 2D dark-fantasy action platformer: a lone knight, a drowned cathedral, and every swing has weight.**
 
-![version](https://img.shields.io/badge/version-0.3.0-c23a33?style=for-the-badge)
+![version](https://img.shields.io/badge/version-0.3.2-c23a33?style=for-the-badge)
 ![status](https://img.shields.io/badge/status-pre--alpha-8a2420?style=for-the-badge)
 ![engine](https://img.shields.io/badge/Godot-4.7.2%20.NET-478cbf?style=for-the-badge&logo=godotengine&logoColor=white)
 ![lang](https://img.shields.io/badge/C%23-.NET%2010-512bd4?style=for-the-badge&logo=dotnet&logoColor=white)
@@ -31,6 +31,7 @@
 Full mechanics list (built / later / not for 2D): [docs/MECHANICS_BACKLOG.md](docs/MECHANICS_BACKLOG.md)
 
 ## 🎮 Controls
+Plays with keyboard or an **Xbox controller** (any XInput pad; PlayStation pads work through Steam Input / SDL), with vibration and controller button prompts.
 | Action | Keyboard | Gamepad |
 |---|---|---|
 | Move | A / D | left stick |
@@ -54,7 +55,7 @@ Needs **Godot 4.7.2 .NET** (`winget install GodotEngine.GodotEngine.Mono`) and t
 ```
 
 ## ⬇️ Download the demo (Windows)
-Get **ClashOfThrones-v0.3.1-Demo-Setup.exe** from the [Releases page](https://github.com/CodTanium/ClashofThrones/releases) and run it
+Get **ClashOfThrones-v0.3.2-Demo-Setup.exe** from the [Releases page](https://github.com/CodTanium/ClashofThrones/releases) and run it
 (installs per user, no admin rights; Start-menu + optional desktop shortcut; uninstall from Windows Settings > Apps).
 Windows may warn about an unknown publisher because the demo isn't code-signed yet: **More info → Run anyway**. A plain `.zip` is attached too.
 

@@ -63,13 +63,18 @@ public partial class Hud : CanvasLayer
 
     public void Toast(string text, Color? color = null)
     {
-        var l = UiKit.Label(text, 9, color ?? UiKit.Gold);
+        var l = UiKit.Label(Pad(text), 9, color ?? UiKit.Gold);
         _toasts.AddChild(l);
         var tw = l.CreateTween();
         tw.TweenInterval(3.0); tw.TweenProperty(l, "modulate:a", 0f, 0.8); tw.TweenCallback(Callable.From(l.QueueFree));
     }
 
-    public void Prompt(string text) { _prompt.Text = text; _prompt.Visible = !string.IsNullOrEmpty(text); }
+    public void Prompt(string text) { _prompt.Text = Pad(text); _prompt.Visible = !string.IsNullOrEmpty(text); }
+
+    /// <summary>Swaps keyboard hints for Xbox button names when a controller is in use.</summary>
+    public static string Pad(string text) => Game.I != null && Game.I.UsingPad && text != null
+        ? text.Replace("[E]", "[LT]").Replace("Esc:", "Start:").Replace("[J]", "[X]").Replace("[R]", "[RB]").Replace("[F]", "[RT]")
+        : text;
 
     public void ShowBoss(string name) { _boss = name; _bossName.Text = name; _bossName.Visible = true; _bossShown = 0; }
     public void SetBossHealth(float v) => _bossHp01 = Mathf.Clamp(v, 0, 1);

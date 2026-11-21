@@ -1,5 +1,10 @@
-﻿# Changelog
+# Changelog
 Newest first.
+
+## 0.3.2 (2026-11-21)
+- Xbox controller: A/B now press and close menu buttons (they only moved focus before), D-pad and stick navigate menus.
+- Controller vibration on hits (Options > Gameplay > Controller vibration).
+- Prompts and tips switch to controller buttons ([LT], Start) when a pad is used.
 
 ## 0.3.1 (2026-11-21)
 - Windows export preset and `scripts/package.ps1` (release build + zip with a tester README) for an itch.io test page.

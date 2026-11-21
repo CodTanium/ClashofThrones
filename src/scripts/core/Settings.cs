@@ -16,6 +16,7 @@ public sealed class Settings
     public bool ScreenShake { get; set; } = true;
     public bool HitStop { get; set; } = true;
     public bool ShowFps { get; set; } = false;
+    public bool Vibration { get; set; } = true;
     public float MasterVolume { get; set; } = 0.8f;
     public float MusicVolume { get; set; } = 0.6f;
     public float SfxVolume { get; set; } = 0.8f;

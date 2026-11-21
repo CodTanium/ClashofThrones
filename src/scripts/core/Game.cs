@@ -71,7 +71,27 @@ public partial class Game : Node
     }
 
     // ------------------------------------------------------------------ feel
-    public void Shake(float amount) { if (Settings.Current.ScreenShake) Trauma = Mathf.Clamp(Trauma + amount, 0f, 1f); }
+    public void Shake(float amount)
+    {
+        if (Settings.Current.ScreenShake) Trauma = Mathf.Clamp(Trauma + amount, 0f, 1f);
+        Rumble(amount);
+    }
+
+    /// <summary>Controller vibration (Xbox and other pads), scaled by impact strength.</summary>
+    public void Rumble(float amount, float seconds = 0.15f)
+    {
+        if (!Settings.Current.Vibration) return;
+        foreach (int pad in Input.GetConnectedJoypads()) Input.StartJoyVibration(pad, Mathf.Clamp(amount * 0.6f, 0, 1), Mathf.Clamp(amount, 0, 1), seconds);
+    }
+
+    /// <summary>True when the last input came from a controller (for button prompts).</summary>
+    public bool UsingPad { get; private set; }
+
+    public override void _Input(InputEvent e)
+    {
+        if (e is InputEventJoypadButton || (e is InputEventJoypadMotion m && Mathf.Abs(m.AxisValue) > 0.5f)) UsingPad = true;
+        else if (e is InputEventKey || e is InputEventMouseButton) UsingPad = false;
+    }
     public void DecayTrauma(float delta) => Trauma = Mathf.Max(0f, Trauma - delta * 1.6f);
 
     int _stopId;

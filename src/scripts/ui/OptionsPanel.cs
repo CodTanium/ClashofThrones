@@ -34,6 +34,7 @@ public static class OptionsPanel
         Option(p, "Difficulty", new[] { "Easy", "Normal", "Hard" }, (int)s.Difficulty, i => s.Difficulty = (Difficulty)i);
         Check(p, "Screen shake", s.ScreenShake, v => s.ScreenShake = v);
         Check(p, "Hit-stop (impact freeze)", s.HitStop, v => s.HitStop = v);
+        Check(p, "Controller vibration", s.Vibration, v => { s.Vibration = v; if (v) Game.I?.Rumble(0.6f, 0.2f); });
 
         // ---- controls (reference)
         var scroll = new ScrollContainer { Name = "Controls", CustomMinimumSize = new Vector2(370, 170) };
