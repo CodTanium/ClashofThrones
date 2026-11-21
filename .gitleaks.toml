@@ -1,0 +1,3 @@
+# gitleaks: secret scan (run by .github/workflows/gitleaks.yml)
+[extend]
+useDefault = true

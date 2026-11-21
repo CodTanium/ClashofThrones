@@ -1,0 +1,8 @@
+name: Task
+description: Planned work (one focused change)
+title: "Task: "
+labels: ["type:task"]
+body:
+  - {type: textarea, id: goal, attributes: {label: Goal, description: What is done when this is done}, validations: {required: true}}
+  - {type: textarea, id: steps, attributes: {label: Steps, placeholder: "- [ ] ..."}}
+  - {type: textarea, id: proof, attributes: {label: How we verify it, description: Test command and expected result}}

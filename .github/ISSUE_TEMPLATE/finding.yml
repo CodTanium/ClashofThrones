@@ -1,0 +1,12 @@
+name: Finding
+description: Something observed that is wrong (one problem per issue)
+title: "Finding: "
+labels: ["type:finding"]
+body:
+  - {type: input, id: env, attributes: {label: Environment, description: "Machine, build mode, commit, branch"}, validations: {required: true}}
+  - {type: input, id: command, attributes: {label: Command, description: The exact command run}, validations: {required: true}}
+  - {type: textarea, id: expected, attributes: {label: Expected}, validations: {required: true}}
+  - {type: textarea, id: actual, attributes: {label: Actual}, validations: {required: true}}
+  - {type: textarea, id: output, attributes: {label: Error output, description: "Exact message; full log in reports/issue-NNNN/, linked", render: text}}
+  - {type: textarea, id: investigation, attributes: {label: Investigation, description: What was checked and tried}}
+  - {type: dropdown, id: cause, attributes: {label: Cause, options: [unknown, suspected, confirmed]}, validations: {required: true}}

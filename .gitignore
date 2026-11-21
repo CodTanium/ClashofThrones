@@ -1,0 +1,15 @@
+# secrets
+.env
+*.env
+private/
+*.db
+# rebuildable output
+node_modules/
+bin/
+obj/
+dist/
+# Godot editor cache (rebuilt on every PC)
+.godot/
+*.translation
+export_presets.cfg.bak
+

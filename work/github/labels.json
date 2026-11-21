@@ -1,0 +1,10 @@
+[
+  { "name": "type:finding",  "color": "d73a4a", "description": "Something observed that is wrong" },
+  { "name": "type:task",     "color": "0e8a16", "description": "Planned work" },
+  { "name": "bug",           "color": "b60205", "description": "Confirmed defect" },
+  { "name": "test",          "color": "1d76db", "description": "Tests and test results" },
+  { "name": "build",         "color": "5319e7", "description": "Build problems" },
+  { "name": "documentation", "color": "0075ca", "description": "Docs" },
+  { "name": "regression",    "color": "e99695", "description": "Worked before, broken now" },
+  { "name": "investigation", "color": "fbca04", "description": "The cause is not confirmed yet" }
+]

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" role="img" aria-label="Clash of Thrones banner">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0d0c16"/><stop offset="1" stop-color="#2a2234"/>
+    </linearGradient>
+    <linearGradient id="blood" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#c23a33"/><stop offset="1" stop-color="#f0c55a"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="300" fill="url(#bg)"/>
+  <g fill="#120f19">
+    <path d="M0 300V210h60v-60l20-40 20 40v60h80v-90l30-50 30 50v90h90v-40h60v40h70v-120l25-45 25 45v120h120v-70l30-40 30 40v70h90v-100l20-35 20 35v100h120v-60h70v60h100v-80l25-40 25 40v80h60v90z"/>
+  </g>
+  <g fill="#ffb05a" opacity=".55"><rect x="225" y="190" width="4" height="8"/><rect x="497" y="165" width="4" height="8"/><rect x="742" y="195" width="4" height="8"/><rect x="1045" y="200" width="4" height="8"/></g>
+  <g transform="translate(150 150)" shape-rendering="crispEdges">
+    <rect x="-3" y="-80" width="6" height="110" fill="#d2d6df"/><rect x="0" y="-80" width="3" height="110" fill="#8f95a3"/>
+    <rect x="-28" y="26" width="56" height="8" fill="#c38d2c"/><rect x="-4" y="34" width="8" height="26" fill="#5c412b"/>
+    <rect x="-8" y="60" width="16" height="8" fill="#c38d2c"/>
+  </g>
+  <text x="270" y="150" fill="#efe4c8" font-family="Georgia, 'Times New Roman', serif" font-size="76" font-weight="700" letter-spacing="3">Clash of Thrones</text>
+  <text x="274" y="198" fill="#a99fb8" font-family="Georgia, 'Times New Roman', serif" font-size="26" font-style="italic">A dark-fantasy action platformer</text>
+  <rect x="274" y="220" width="340" height="4" fill="url(#blood)"/>
+</svg>
